@@ -1,0 +1,576 @@
+{
+  "entities": {
+    "Teacher": {
+      "title": "Teacher",
+      "description": "Information about a teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "specialization": { "type": "string" },
+        "subjects": { "type": "array" },
+        "contact": { "type": "string" },
+        "billingRate": { "type": "number" },
+        "payoutRate": { "type": "number" },
+        "hourlyRate": { "type": "number" }
+      },
+      "required": ["id", "name", "subjects", "contact", "billingRate", "payoutRate"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Information about a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "teachers": { "type": "array" },
+        "grade": { "type": "string" },
+        "archived": { "type": "boolean" }
+      },
+      "required": ["id", "name", "teachers"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Information about a tutoring session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "subject": { "type": "string" },
+        "durationHours": { "type": "number" },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["id", "teacherId", "studentId", "subject", "durationHours", "date"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "System settings",
+      "type": "object",
+      "properties": {
+        "defaultHourlyRate": { "type": "number" },
+        "subjects": { "type": "array" },
+        "financialCategories": { "type": "array" },
+        "lowBalanceThreshold": { "type": "number" },
+        "autoWhatsAppLowBalanceReminderEnabled": { "type": "boolean" },
+        "autoWhatsAppTemplate": { "type": "string" },
+        "defaultWhatsAppReminderTemplate": { "type": "string" },
+        "autoWhatsAppReminderCooldownDays": { "type": "number" }
+      }
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Information about a payment made to a teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "note": { "type": "string" }
+      },
+      "required": ["id", "teacherId", "amount", "date"]
+    },
+    "StudentCredit": {
+      "title": "Student Credit",
+      "description": "Deposit made by a student to top up their balance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "note": { "type": "string" }
+      },
+      "required": ["id", "studentId", "amount", "date"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Information about a home assignment or student task with an expiration date",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "studentId": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "expirationDate": { "type": "string", "format": "date" },
+        "completed": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "studentId", "expirationDate", "completed", "createdAt"]
+    },
+    "GroupCourse": {
+      "title": "Group Course",
+      "description": "Information about a group course with multiple students and teacher payouts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "studentIds": { "type": "array" },
+        "subject": { "type": "string" },
+        "totalHours": { "type": "number" },
+        "loggedHours": { "type": "number" },
+        "studentBillingType": { "type": "string" },
+        "studentRate": { "type": "number" },
+        "teacherPayoutType": { "type": "string" },
+        "teacherRate": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "teacherId", "studentIds", "subject", "totalHours", "loggedHours", "studentBillingType", "studentRate", "teacherPayoutType", "teacherRate", "status", "createdAt"]
+    },
+    "ManagerBiometric": {
+      "title": "Manager Biometric",
+      "description": "Biometric registration flags and metadata for the manager",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enrolled": { "type": "boolean" },
+        "displayName": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "enrolled"]
+    },
+    "AiEvaluation": {
+      "title": "AI Evaluation",
+      "description": "Rating and feedback notes left by teachers on Academic AI results",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "rating": { "type": "string", "enum": ["up", "down"] },
+        "feedback": { "type": "string" },
+        "topic": { "type": "string" },
+        "subject": { "type": "string" },
+        "grade": { "type": "string" },
+        "fileType": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "teacherId", "rating"]
+    },
+    "TrialLesson": {
+      "title": "Trial Lesson",
+      "description": "Information about a trial lesson",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentName": { "type": "string" },
+        "phone": { "type": "string" },
+        "grade": { "type": "string" },
+        "subject": { "type": "string" },
+        "topic": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "scheduledTime": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "createdAt": { "type": "string" },
+        "lastReminderSentAt": { "type": "string" },
+        "reminderCount": { "type": "number" }
+      },
+      "required": ["id", "studentName", "phone", "grade", "subject", "teacherId", "status", "createdAt"]
+    },
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Log of system activities, adjustments, and transactions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "actionType": { "type": "string" },
+        "actionName": { "type": "string" },
+        "actor": { "type": "string" },
+        "details": { "type": "string" },
+        "amount": { "type": "number" }
+      },
+      "required": ["timestamp", "actionType", "actionName", "actor", "details"]
+    },
+    "Backup": {
+      "title": "Backup",
+      "description": "Database backup details and serialized data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "backupType": { "type": "string" },
+        "counts": { "type": "object" },
+        "dataString": { "type": "string" }
+      },
+      "required": ["id", "createdAt", "backupType", "counts", "dataString"]
+    },
+    "OnlineExam": {
+      "title": "Online Exam",
+      "description": "An online multiple choice exam created by teachers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "grade": { "type": "string" },
+        "subject": { "type": "string" },
+        "category": { "type": "string" },
+        "questions": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string" }
+      },
+      "required": ["id", "title", "grade", "subject", "questions", "teacherId", "createdAt"]
+    },
+    "ExamResult": {
+      "title": "Exam Result",
+      "description": "A student result/submission for an online exam",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "examId": { "type": "string" },
+        "examTitle": { "type": "string" },
+        "category": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentPhone": { "type": "string" },
+        "score": { "type": "number" },
+        "correctCount": { "type": "number" },
+        "answersCount": { "type": "number" },
+        "answers": { "type": "array" },
+        "submittedAt": { "type": "string" },
+        "teacherId": { "type": "string" }
+      },
+      "required": ["id", "examId", "studentName", "studentPhone", "score", "correctCount", "answersCount", "submittedAt", "teacherId"]
+    },
+    "EducationalResource": {
+      "title": "Educational Resource",
+      "description": "Educational PDFs and reference links uploaded by administrators or teachers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "grade": { "type": "string" },
+        "type": { "type": "string" },
+        "url": { "type": "string" },
+        "content": { "type": "string" },
+        "tags": { "type": "array" },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "pdf_annotations": { "type": "array" }
+      },
+      "required": ["id", "title", "type", "createdAt"]
+    },
+    "PdfAnnotationDoc": {
+      "title": "PDF Annotations Document",
+      "description": "Synced highlights, notes, and academic annotations for educational PDF resources",
+      "type": "object",
+      "properties": {
+        "resourceId": { "type": "string" },
+        "resourceTitle": { "type": "string" },
+        "annotations": { "type": "array" },
+        "updatedAt": { "type": "string" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["resourceId", "annotations", "updatedAt"]
+    },
+    "TeacherNotification": {
+      "title": "Teacher Notification",
+      "description": "Instant notifications generated when the manager/director modifies a teacher session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "date": { "type": "string" },
+        "oldDuration": { "type": "number" },
+        "newDuration": { "type": "number" },
+        "oldNotes": { "type": "string" },
+        "newNotes": { "type": "string" },
+        "notesChanged": { "type": "boolean" },
+        "durationChanged": { "type": "boolean" },
+        "updatedAt": { "type": "string" },
+        "seen": { "type": "boolean" }
+      },
+      "required": ["teacherId", "sessionId", "studentName", "updatedAt", "seen"]
+    },
+    "ScheduledReport": {
+      "title": "Scheduled Report",
+      "description": "Scheduled periodic (monthly) academic and financial performance reports for students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "academicProgress": { "type": "string" },
+        "notes": { "type": "string" },
+        "frequency": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "lastGenerated": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "studentId", "studentName", "academicProgress", "frequency", "status", "createdAt"]
+    },
+    "StudentAccount": {
+      "title": "Student Account",
+      "description": "Student login credentials and account access",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "studentId", "username", "password", "createdAt", "isActive"]
+    },
+    "TeacherStudentNote": {
+      "title": "Teacher Student Note",
+      "description": "Private notes written by a teacher for a specific student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "notesText": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "teacherId", "studentId", "notesText"]
+    },
+    "StudentAiChat": {
+      "title": "Student AI Chat",
+      "description": "Historical AI chat sessions and inquiries made by students using Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "messages": { "type": "array" },
+        "messageCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "studentId", "title", "messages", "createdAt", "updatedAt"]
+    },
+    "StudentProgress": {
+      "title": "Student Progress",
+      "description": "Student unit progress and quiz results collection",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentEmail": { "type": "string" },
+        "unitId": { "type": "string" },
+        "unitNumber": { "type": "number" },
+        "unitTitle": { "type": "string" },
+        "quizScore": { "type": "number" },
+        "quizTotal": { "type": "number" },
+        "quizPercentage": { "type": "number" },
+        "passed": { "type": "boolean" },
+        "answers": { "type": "object" },
+        "courseTitle": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["studentId", "unitId", "quizScore", "quizPercentage", "passed"]
+    },
+    "ScheduledWhatsAppReminder": {
+      "title": "Scheduled WhatsApp Reminder",
+      "description": "Scheduled automated WhatsApp financial reminders for students with low or negative balances",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "scheduledDate": { "type": "string" },
+        "scheduledTime": { "type": "string" },
+        "scheduledAt": { "type": "string" },
+        "targetMode": { "type": "string" },
+        "selectedStudentIds": { "type": "array" },
+        "messageTemplate": { "type": "string" },
+        "repeatInterval": { "type": "string" },
+        "autoSend": { "type": "boolean" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "executedAt": { "type": "string" },
+        "recipientsCount": { "type": "number" },
+        "lastRunDetails": { "type": "object" }
+      },
+      "required": ["id", "title", "scheduledAt", "targetMode", "status", "createdAt"]
+    },
+    "WhiteboardAutosave": {
+      "title": "WhiteboardAutosave",
+      "description": "Periodic autosave snapshot of the smart whiteboard drawing canvas",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sessionCode": { "type": "string" },
+        "lessonTitle": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "subject": { "type": "string" },
+        "canvasBgStyle": { "type": "string" },
+        "elements": { "type": "array" },
+        "elementsCount": { "type": "number" },
+        "clientTimestamp": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "sessionCode", "elements"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Operating expense of the center",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "paymentMethod": { "type": "string" },
+        "invoiceRef": { "type": "string" },
+        "paidTo": { "type": "string" },
+        "note": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["id", "amount", "date", "category"]
+    },
+    "ExpenseCategory": {
+      "title": "ExpenseCategory",
+      "description": "Operational expense category definition",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "color": { "type": "string" },
+        "icon": { "type": "string" },
+        "defaultTitle": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    }
+  },
+  "firestore": {
+    "/studentProgress/{progressId}": {
+      "schema": "StudentProgress",
+      "description": "Student unit progress and multiple choice quiz results collection"
+    },
+    "/studentAiChats/{chatId}": {
+      "schema": "StudentAiChat",
+      "description": "Student AI chat history sessions and saved inquiries"
+    },
+    "/teacherStudentNotes/{noteId}": {
+      "schema": "TeacherStudentNote",
+      "description": "Private teacher-student notes collection"
+    },
+    "/teacherNotifications/{notificationId}": {
+      "schema": "TeacherNotification",
+      "description": "Instant teacher notifications generated upon session modifications"
+    },
+    "/educational_resources/{resourceId}": {
+      "schema": "EducationalResource",
+      "description": "Educational resources repository for files and reference web sources"
+    },
+    "/pdf_annotations/{annotationDocId}": {
+      "schema": "PdfAnnotationDoc",
+      "description": "Synced PDF annotations and teacher explanatory notes"
+    },
+    "/onlineExams/{examId}": {
+      "schema": "OnlineExam",
+      "description": "Online exams collection"
+    },
+    "/examResults/{resultId}": {
+      "schema": "ExamResult",
+      "description": "Exams results collection"
+    },
+    "/backups/{backupId}": {
+      "schema": "Backup",
+      "description": "Historical cloud backups collection"
+    },
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "System activity logs collection"
+    },
+    "/trialLessons/{trialId}": {
+      "schema": "TrialLesson",
+      "description": "Trial lessons collection"
+    },
+    "/aiEvaluations/{evaluationId}": {
+      "schema": "AiEvaluation",
+      "description": "Store thumbs up/down and notes on AI-generated materials"
+    },
+    "/managerBiometrics/{managerId}": {
+      "schema": "ManagerBiometric",
+      "description": "Manager biometrics credentials and configuration"
+    },
+    "/groupCourses/{courseId}": {
+      "schema": "GroupCourse",
+      "description": "Group courses collection"
+    },
+    "/teachers/{teacherId}": {
+      "schema": "Teacher",
+      "description": "Teachers collection"
+    },
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Students collection"
+    },
+    "/sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Sessions collection"
+    },
+    "/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Payments collection"
+    },
+    "/studentCredits/{creditId}": {
+      "schema": "StudentCredit",
+      "description": "Student credits/deposits collection"
+    },
+    "/credits/{creditId}": {
+      "schema": "StudentCredit",
+      "description": "Legacy/Task credits collection"
+    },
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Tasks/Home Assignments collection"
+    },
+    "/settings/global": {
+      "schema": "Settings",
+      "description": "System settings document"
+    },
+    "/scheduledReports/{reportId}": {
+      "schema": "ScheduledReport",
+      "description": "Collection of scheduled periodic student reports"
+    },
+    "/studentAccounts/{accountId}": {
+      "schema": "StudentAccount",
+      "description": "Student login credentials and system access permissions"
+    },
+    "/scheduledWhatsAppReminders/{reminderId}": {
+      "schema": "ScheduledWhatsAppReminder",
+      "description": "Collection of scheduled automated WhatsApp financial reminders for students"
+    },
+    "/whiteboard_autosaves/{docId}": {
+      "schema": "WhiteboardAutosave",
+      "description": "Collection of periodic autosaved whiteboard drawing canvases"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Center operational expenses collection"
+    },
+    "/expenseCategories/{categoryId}": {
+      "schema": "ExpenseCategory",
+      "description": "Custom operational expense categories collection"
+    }
+  }
+}

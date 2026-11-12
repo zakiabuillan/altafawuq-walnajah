@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-slate-800 bg-slate-50;
+  }
+}
+
+/* Custom styled scrollbars for high polish */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300;
+}
+
+/* PDF Continuous Vertical Reader Styling (.pdf-viewer-container) */
+.pdf-viewer-container {
+  scroll-behavior: smooth !important;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  user-select: text;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-viewer-container ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pdf-viewer-container ::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.pdf-viewer-container ::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.4);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.pdf-viewer-container ::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.7);
+}
+
+/* Infinite Scrolling Canvas in PDF Viewer */
+.pdf-infinite-scroll-canvas {
+  scroll-behavior: smooth !important;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scroll-padding-top: 5.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Page sheet with smooth transition & elevation */
+.pdf-page-sheet {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(245, 158, 11, 0.15);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.3s ease;
+  will-change: transform, box-shadow, border-color;
+}
+
+.pdf-page-sheet:hover {
+  box-shadow: 0 28px 60px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(245, 158, 11, 0.35);
+}
+
+/* Smooth Page Navigation Target Glow & Scale Effect */
+.pdf-page-transition-pulse {
+  animation: pageTargetTransition 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageTargetTransition {
+  0% {
+    transform: scale(1.018);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.85), 0 25px 60px -10px rgba(245, 158, 11, 0.35);
+    border-color: rgba(245, 158, 11, 0.95);
+  }
+  40% {
+    transform: scale(1.008);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.55), 0 20px 50px -10px rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+}
+
+/* Scroll-stop Active Page Spotlight Glow (.pdf-viewer-container) */
+.pdf-page-scroll-highlight {
+  animation: pageScrollHighlightGlow 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageScrollHighlightGlow {
+  0% {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.95), 0 0 40px 10px rgba(245, 158, 11, 0.35), 0 30px 60px -10px rgba(0, 0, 0, 0.95);
+    border-color: #f59e0b !important;
+  }
+  25% {
+    box-shadow: 0 0 0 3.5px rgba(251, 191, 36, 0.9), 0 0 30px 8px rgba(245, 158, 11, 0.3), 0 25px 60px -10px rgba(0, 0, 0, 0.9);
+    border-color: #fbbf24 !important;
+  }
+  60% {
+    box-shadow: 0 0 0 2.5px rgba(245, 158, 11, 0.65), 0 0 20px 4px rgba(245, 158, 11, 0.2), 0 25px 60px -10px rgba(0, 0, 0, 0.9);
+    border-color: #f59e0b !important;
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4), 0 20px 45px -10px rgba(0, 0, 0, 0.8);
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+}
+
+/* Numbered Page Divider */
+.pdf-page-divider {
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.pdf-page-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.4) 20%, rgba(245, 158, 11, 0.8) 50%, rgba(245, 158, 11, 0.4) 80%, transparent);
+  z-index: 0;
+}
+
+/* Infinite Scrolling Glow Accent */
+.pdf-infinite-glow {
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.12) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 80%);
+}
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="أكاديمية التفوق" />
+    <title>أكاديمية التفوق - منصة إدارة المراجع المعتمدة وتوليد الاختبارات والمعلم الذكي</title>
+    <meta name="description" content="منظومة محلية متكاملة لإدارة المراجع المعتمدة وتوليد اختبارات اختيار من متعدد بدقة وتجميد النماذج وتحليل سيكومتري والمعلم الذكي." />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top);
+        --sab: env(safe-area-inset-bottom);
+        --sal: env(safe-area-inset-left);
+        --sar: env(safe-area-inset-right);
+      }
+      html {
+        -webkit-tap-highlight-color: transparent;
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: 'Cairo', 'Inter', sans-serif;
+        min-height: 100dvh;
+      }
+    </style>
+    <script>
+      try {
+        if (window.location.search.indexOf('view=whiteboard') !== -1 || window.location.pathname.indexOf('/whiteboard') !== -1) {
+          document.documentElement.style.backgroundColor = '#020617';
+        }
+      } catch (e) {}
+    </script>
+    <!-- MathJax Setup with Chemistry support (mhchem) and SVG output -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          packages: {'[+]': ['mhchem']}
+        },
+        svg: {
+          fontCache: 'local'
+        },
+        loader: {
+          load: ['[tex]/mhchem', 'output/svg']
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" id="MathJax-script" async></script>
+  </head>
+  <body class="bg-slate-50 text-slate-800 selection:bg-teal-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

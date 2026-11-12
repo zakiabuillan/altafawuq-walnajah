@@ -1,0 +1,137 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+
+    match /teachers/{teacherId} {
+      allow read, write: if true;
+    }
+
+    match /managerBiometrics/{managerId} {
+      allow read, write: if true;
+    }
+
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    match /sessions/{sessionId} {
+      allow read, write: if true;
+    }
+
+    match /settings/{docId} {
+      allow read, write: if true;
+    }
+
+    match /payments/{paymentId} {
+      allow read, write: if true;
+    }
+    match /studentCredits/{creditId} {
+      allow read, write: if true;
+    }
+    match /credits/{creditId} {
+      allow read, write: if true;
+    }
+    match /assignments/{assignmentId} {
+      allow read, write: if true;
+    }
+    match /tasks/{taskId} {
+      allow read, write: if true;
+    }
+    match /groupCourses/{courseId} {
+      allow read, write: if true;
+    }
+    match /aiEvaluations/{evaluationId} {
+      allow read, write: if true;
+    }
+
+    match /trialLessons/{trialId} {
+      allow read, write: if true;
+    }
+
+    match /onlineExams/{examId} {
+      allow read, write: if true;
+    }
+
+    match /examResults/{resultId} {
+      allow read, write: if true;
+    }
+
+    match /activityLogs/{logId} {
+      allow read, write: if true;
+    }
+    match /backups/{backupId} {
+      allow read, write: if true;
+    }
+    match /educational_resources/{resourceId} {
+      allow read, write: if true;
+    }
+    match /educational_resources/{resourceId}/annotations/{annotationId} {
+      allow read, write: if true;
+    }
+    match /pdf_annotations/{annotationDocId} {
+      allow read, write: if true;
+    }
+    match /teacherNotifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    match /scheduledReports/{reportId} {
+      allow read, write: if true;
+    }
+
+    match /studentAccounts/{accountId} {
+      allow read, write: if true;
+    }
+
+    match /teacherStudentNotes/{noteId} {
+      allow read, write: if true;
+    }
+
+    match /expenses/{expenseId} {
+      allow read, write: if true;
+    }
+
+    match /expenseCategories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    match /scheduledWhatsAppReminders/{reminderId} {
+      allow read, write: if true;
+    }
+
+    match /studentAiChats/{chatId} {
+      allow read, write: if true;
+    }
+
+    match /studentProgress/{progressId} {
+      allow read, write: if true;
+    }
+
+    match /whiteboard_autosaves/{docId} {
+      allow read, write: if true;
+    }
+
+    match /auto_grading_rules/{ruleId} {
+      allow read, write: if true;
+    }
+
+    match /student_notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    match /exam_alerts/{alertId} {
+      allow read, write: if true;
+    }
+
+    match /generated_curriculums/{curriculumId} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "تطبيق التفوق والنجاح",
+  "description": "An administration tool for tutoring centers to manage teachers, students, sessions, and financial reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
